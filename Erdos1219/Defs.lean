@@ -38,23 +38,27 @@ theorem Homog.singleton (f : V → V → Bool) (c : Bool) (x : V) : Homog f c {x
 /-- The pair colouring on ordered pairs of distinct points induced by a colouring of
 `2`-element finsets (the diagonal is coloured `false`, which is irrelevant). -/
 noncomputable def ofFinsetColouring (col : {s : Finset V // s.card = 2} → Bool) (x y : V) :
-    Bool :=
-  if h : x = y then false else col ⟨{x, y}, Finset.card_pair h⟩
+    Bool := by
+  classical
+  exact if h : x = y then false else col ⟨{x, y}, Finset.card_pair h⟩
+
+theorem ofFinsetColouring_apply [DecidableEq V] (col : {s : Finset V // s.card = 2} → Bool)
+    {x y : V} (h : x ≠ y) :
+    ofFinsetColouring col x y = col ⟨{x, y}, Finset.card_pair h⟩ := by
+  unfold ofFinsetColouring
+  simp only [h, ↓reduceDIte]
+  congr
+  exact Subsingleton.elim _ _
 
 theorem ofFinsetColouring_symm (col : {s : Finset V // s.card = 2} → Bool) (x y : V) :
     ofFinsetColouring col x y = ofFinsetColouring col y x := by
-  unfold ofFinsetColouring
+  classical
   by_cases h : x = y
-  · subst h; simp
+  · subst h; rfl
   · have h' : y ≠ x := fun e => h e.symm
-    rw [dif_neg h, dif_neg h']
+    rw [ofFinsetColouring_apply col h, ofFinsetColouring_apply col h']
     congr 1
     exact Subtype.ext (Finset.pair_comm x y)
-
-theorem ofFinsetColouring_apply (col : {s : Finset V // s.card = 2} → Bool) {x y : V}
-    (h : x ≠ y) : ofFinsetColouring col x y = col ⟨{x, y}, Finset.card_pair h⟩ := by
-  unfold ofFinsetColouring
-  rw [dif_neg h]
 
 /-- The classical binary partition relation `κ → (α)²₂` on colourings of `2`-element finsets,
 in the style of `Combinatorics.cardinalPartitionRel` of formal-conjectures. -/

@@ -2,7 +2,7 @@ import Erdos1219.Defs
 
 /-! Interface statements (proved in their own files). -/
 
-open Cardinal
+open Cardinal Ordinal
 
 namespace Erdos1219
 
