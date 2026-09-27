@@ -314,4 +314,3 @@ theorem erdosRado_unbalanced {V : Type u} (f : V → V → Bool) (hf : ∀ x y, 
 
 end Erdos1219
 
-#print axioms Erdos1219.erdosRado_unbalanced

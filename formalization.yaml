@@ -1,0 +1,165 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml (v0.4) — metadata for the Lean 4 formalization of Erdős Problem #1219.
+# Modelled on elliotglazer/erdos501's formalization.yaml; Palomar registry conventions
+# (https://palomar-registry.org/how-to-submit) are followed.
+
+version: "v0.4"
+
+project:
+  name: "Erdős Problem #1219 in Lean 4: Σ_k 2^{ℵ_{n_k}} → (ℵ_ω)² (Shelah 1975)"
+  authors:
+    - "Ji Ho Bae (JRTI)"
+  responsible_maintainers:
+    - "Ji Ho Bae"
+  license: "Apache-2.0"
+  description: >-
+    Erdős problem #1219 (erdosproblems.com/1219; Erdős–Hajnal 1971, Problem 3, asked by Erdős,
+    Hajnal and Rado): let (n_k) be an increasing sequence of integers such that 2^{ℵ_{n_k}} is
+    strictly increasing and 2^{ℵ_{n_0}} > ℵ_ω; is it true that Σ_k 2^{ℵ_{n_k}} → (ℵ_ω)²?  Shelah
+    (Notes on partition calculus, 1975, §1) proved that the answer is yes.  This project formalizes
+    that proof in Lean 4 with Mathlib: the comparator target erdos_1219 states that for every
+    strictly increasing n : ℕ → ℕ with k ↦ 2 ^ ℵ_(n k) strictly increasing and ℵ_ω < 2 ^ ℵ_(n 0),
+    the binary partition relation PartitionArrow (Σ_k 2 ^ ℵ_(n k)) ℵ_ω holds, i.e. every
+    2-colouring of the 2-element subsets of a set of cardinality Σ_k 2 ^ ℵ_(n k) has a monochromatic
+    subset of cardinality ℵ_ω (PartitionArrow is the binary case of formal-conjectures'
+    Combinatorics.cardinalPartitionRel).  The proof follows Shelah's Canonization Lemma 1.1 and
+    Theorem 1.2: the unbalanced Erdős–Rado theorem (2^μ)⁺ → ((2^μ)⁺, μ⁺)² (proved here with a
+    critical-ordinal / closure-point argument), a canonization of the colouring across blocks of
+    sizes (2^{ℵ_{n_k}})⁺ by means of guides generic over all small subsets of the earlier blocks,
+    and Ramsey's theorem for pairs on ℕ.  The target is proved from propext, Classical.choice and
+    Quot.sound only and passes the Lean comparator (landrun sandbox, NanoDa kernel).
+
+sources:
+  - title: "Unsolved problems in set theory"
+    authors: ["Paul Erdős", "András Hajnal"]
+    id: "Proc. Sympos. Pure Math. XIII, Part I (Axiomatic Set Theory), AMS 1971, 17–48; Problem 3"
+    type: paper
+    relationship: background
+    author_endorsement: "n/a"
+    note: "poses the problem (attributed to Erdős, Hajnal and Rado); no result of this source is formalized"
+  - title: "Erdős problem #1219 (erdosproblems.com)"
+    authors: ["Thomas F. Bloom (ed.)"]
+    id: "https://www.erdosproblems.com/1219"
+    type: "web discussion"
+    relationship: background
+    author_endorsement: "not-contacted"
+    note: "the canonical modern statement; the Lean statement follows it"
+  - title: "Notes on partition calculus"
+    authors: ["Saharon Shelah"]
+    id: "Infinite and finite sets (Colloq., Keszthely, 1973), Vol. III, Colloq. Math. Soc. János Bolyai 10, North-Holland 1975, 1257–1276 (Sh:40; MR 406798)"
+    type: paper
+    location: "§1: Canonization Lemma 1.1, Theorem 1.2, Corollary 1.3"
+    relationship: formalizes
+    author_endorsement: "not-contacted"
+    note: >-
+      the proof formalized.  Adaptations: the canonization lemma is specialized to two colours,
+      pairs and ω blocks; the unbalanced Erdős–Rado theorem λ_i → (λ_i, μ(i))², which Shelah
+      cites from Erdős–Hajnal–Rado, is proved from scratch (with target μ(i)⁺) by a critical-ordinal
+      argument in which Fodor's lemma is replaced by an explicit closure-point construction
+  - title: "The Erdős–Hajnal problem list"
+    authors: ["Péter Komjáth"]
+    id: "Bull. Symb. Log. 31 (2025), 418–461"
+    type: paper
+    relationship: background
+    author_endorsement: "not-contacted"
+    note: "survey; records Shelah's solution and Hajnal's open conjecture Σ 2^{ℵ_{n_k}} → (ℵ_ω, 4)³, which is not formalized"
+
+related_formalizations:
+  - id: "https://github.com/google-deepmind/formal-conjectures"
+    relationship: builds-on
+    note: >-
+      the partition relation PartitionArrow is the binary case (r = 2, two colours, equal targets)
+      of Combinatorics.cardinalPartitionRel; no code is imported (the definition is restated so that
+      Challenge.lean imports Mathlib only)
+  - id: "https://github.com/elliotglazer/erdos501"
+    relationship: builds-on
+    note: "comparator tooling conventions and scripts (Apache-2.0), adapted in scripts/"
+  - id: "https://github.com/leanprover-community/mathlib4"
+    relationship: builds-on
+    note: "cardinal and ordinal arithmetic, ultrafilters, Zorn's lemma (pinned commit c55e6e786f49471c72fbddbec5415808896aec1e)"
+
+classification:
+  arxiv: ["math.LO", "math.CO"]
+  msc2020: ["03E02", "03E05", "03E10", "05D10"]
+
+status:
+  scope: >-
+    The full affirmative answer to Erdős #1219 as stated on erdosproblems.com, for every sequence
+    (n_k) satisfying the hypotheses.  Complete: no sorry in the import closure of Solution.lean.
+    Hajnal's stronger conjecture Σ 2^{ℵ_{n_k}} → (ℵ_ω, 4)³ is not addressed.
+  sorry_count: 0  # the one sorry of Challenge.lean is the comparator's trusted statement
+  sorry_in_definitions: 0
+  axioms: [propext, Classical.choice, Quot.sound]
+  main_results:
+    - declaration: "erdos_1219"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: "comparator.json"
+
+automation:
+  methods:
+    - method: agent
+      models:
+        - "Claude Fable 5.1 (Anthropic; Claude Code)"
+      framework: "Claude Code agent sessions (one coordinating session and two sub-agent sessions)"
+      tool_setup: >-
+        Claude Code (Claude Fable 5.1) agent sessions with remote Lean builds (Lean v4.35.0-rc3,
+        pinned Mathlib) on DigitalOcean servers.  The agents wrote the Lean code under Ji Ho Bae's
+        direction from Shelah's 1975 proof, ran lake builds, the axiom audit and the comparator.
+    - method: manual
+      tool_setup: >-
+        Ji Ho Bae: problem selection, direction, supervision and review of the results, and final
+        responsibility for the project.
+  notes: >-
+    Ji Ho Bae led the project; the Lean code was written by the AI agent sessions listed above.
+    All proofs are checked by Lean's kernel; the comparator accepts the challenge with the standard
+    axioms only (NanoDa kernel and Lean kernel).
+
+fidelity:
+  divergences: >-
+    (1) "Increasing sequence of integers (n_k)" is rendered as a strictly increasing n : ℕ → ℕ
+    (indices of alephs are natural numbers).  (2) The arrow (ℵ_ω)² is read with two colours, the
+    standard convention when the number of colours is omitted; colourings are functions on the
+    2-element finsets of the vertex type and the homogeneous set has cardinality exactly ℵ_ω,
+    following formal-conjectures' cardinalPartitionRel.  (3) Σ_k 2^{ℵ_{n_k}} is the cardinal sum
+    Cardinal.sum of the ℕ-indexed family.  (4) The statement is universe-polymorphic in the
+    universe of the vertex type.
+
+review:
+  status: agent-reviewed
+  reviewers:
+    - "Ji Ho Bae"
+    - "Claude Fable 5.1 agent session (review of the trusted statement against erdosproblems.com/1219 and of the proof against Sh:40 §1)"
+  notes: >-
+    No independent external peer review.  Mechanical checks (2026-09-28 KST): Challenge.lean's
+    PartitionArrow is a verbatim copy of the library's (scripts/sync_challenge.py --check); the Lean
+    comparator (leanprover/comparator 777e7f5, lean4export at v4.35.0-rc3, landrun 0.1.15 sandbox,
+    nanoda_lib 68d5ca9) judged comparator.json: "Nanoda kernel accepts the solution / Lean default
+    kernel accepts the solution / Your solution is okay!"; axiom audit (AxiomAudit.lean): the target
+    depends on [propext, Classical.choice, Quot.sound].  Toolchain Lean v4.35.0-rc3, Mathlib
+    c55e6e786f49471c72fbddbec5415808896aec1e.
+
+alignment:
+  namespace: "Erdos1219, Erdos1219.Ctx"
+  statements:
+    - source: "erdosproblems.com/1219 = Shelah 1975, Corollary 1.3"
+      lean: "erdos_1219 (Erdos1219.erdos_1219 ← Erdos1219.core)"
+      module: "Solution.lean (Erdos1219/Main.lean, Erdos1219/Canonization.lean)"
+      status: proved
+    - source: "Shelah 1975, Theorem 1.2 (λ = ℵ_ω), for symmetric colourings"
+      lean: "Erdos1219.core (Erdos1219.Ctx.exists_homog)"
+      module: "Erdos1219/Canonization.lean"
+      status: proved
+    - source: "Shelah 1975, Canonization Lemma 1.1 (two colours, pairs, ω blocks)"
+      lean: "Erdos1219.Ctx.exists_guide, Erdos1219.Ctx.exists_blocks, Erdos1219.Ctx.canonical"
+      module: "Erdos1219/Canonization.lean"
+      status: proved
+    - source: "Unbalanced Erdős–Rado theorem (2^μ)⁺ → ((2^μ)⁺, μ⁺)²"
+      lean: "Erdos1219.erdosRado_unbalanced"
+      module: "Erdos1219/UnbalancedErdosRado.lean"
+      status: proved
+    - source: "Ramsey's theorem ω → (ω)²₂"
+      lean: "Erdos1219.ramsey_nat"
+      module: "Erdos1219/Ramsey.lean"
+      status: proved

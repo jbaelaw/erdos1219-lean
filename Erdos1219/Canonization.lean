@@ -1,7 +1,7 @@
 import Erdos1219.Defs
 import Erdos1219.CardinalLemmas
 import Erdos1219.Ramsey
-import Erdos1219.Statements
+import Erdos1219.UnbalancedErdosRado
 
 /-!
 # The canonization argument (Shelah, Notes on partition calculus, §1)
@@ -100,8 +100,8 @@ theorem noBig (k : ℕ) (c : Bool) (H : Set V) (hH : Homog S.f c H) : #H ≠ S.l
 theorem exists_homog_two (k : ℕ) (C : Set V) (hC : #C = S.lam k) :
     ∃ B0 B1 : Set V, B0 ⊆ C ∧ B1 ⊆ C ∧ #B0 = S.μ k ∧ #B1 = S.μ k ∧
       Homog S.f false B0 ∧ Homog S.f true B1 := by
-  have h0 := erdosRado_unbalanced_stmt S.f S.hf (S.μ k) (S.aleph0_le_μ k) C hC true
-  have h1 := erdosRado_unbalanced_stmt S.f S.hf (S.μ k) (S.aleph0_le_μ k) C hC false
+  have h0 := erdosRado_unbalanced S.f S.hf (S.μ k) (S.aleph0_le_μ k) C hC true
+  have h1 := erdosRado_unbalanced S.f S.hf (S.μ k) (S.aleph0_le_μ k) C hC false
   rcases h0 with ⟨H, -, hH, hom⟩ | ⟨H0, hH0C, hH0, hom0⟩
   · exact absurd hH (S.noBig k true H hom)
   rcases h1 with ⟨H, -, hH, hom⟩ | ⟨H1, hH1C, hH1, hom1⟩

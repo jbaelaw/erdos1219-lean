@@ -1,0 +1,6 @@
+Sun Sep 27 17:19:23 UTC 2026
+'erdos_1219' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos1219.erdos_1219' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos1219.core' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos1219.erdosRado_unbalanced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos1219.ramsey_nat' depends on axioms: [propext, Classical.choice, Quot.sound]
