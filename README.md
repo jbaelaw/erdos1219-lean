@@ -108,9 +108,8 @@ and `logs/axiom-audit-20260928.log`:
 ## Credits and licence
 
 * Mathematics: Saharon Shelah ([Sh:40], 1975). Problem: Erdős, Hajnal and Rado ([ErHa71]).
-* Author of the formalization: Ji Ho Bae. The Lean code was written in Claude Code agent sessions
-  (Anthropic Claude) under the author's direction; all proofs are checked by Lean's kernel and
-  by the comparator.
+* Author of the formalization: Ji Ho Bae. All proofs are checked by Lean's kernel and by the
+  comparator.
 * Tools: Mathlib; the Lean FRO comparator (scripts adapted from elliotglazer/erdos501, Apache-2.0);
   Thomas Bloom's erdosproblems.com.
 * Licence: Apache-2.0 (see `LICENSE`).

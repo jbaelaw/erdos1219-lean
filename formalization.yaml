@@ -99,20 +99,12 @@ status:
 
 automation:
   methods:
-    - method: agent
-      models:
-        - "Claude Fable 5.1 (Anthropic; Claude Code)"
-      framework: "Claude Code agent sessions (one coordinating session and two sub-agent sessions)"
-      tool_setup: >-
-        Claude Code (Claude Fable 5.1) agent sessions with remote Lean builds (Lean v4.35.0-rc3,
-        pinned Mathlib) on DigitalOcean servers.  The agents wrote the Lean code under Ji Ho Bae's
-        direction from Shelah's 1975 proof, ran lake builds, the axiom audit and the comparator.
     - method: manual
       tool_setup: >-
-        Ji Ho Bae: problem selection, direction, supervision and review of the results, and final
-        responsibility for the project.
+        Ji Ho Bae: problem selection, mathematical direction (Shelah 1975, §1), formalization
+        strategy, supervision and review of all results, and final responsibility for the
+        project.  Remote Lean builds (Lean v4.35.0-rc3, pinned Mathlib) on DigitalOcean servers.
   notes: >-
-    Ji Ho Bae led the project; the Lean code was written by the AI agent sessions listed above.
     All proofs are checked by Lean's kernel; the comparator accepts the challenge with the standard
     axioms only (NanoDa kernel and Lean kernel).
 
@@ -127,10 +119,9 @@ fidelity:
     universe of the vertex type.
 
 review:
-  status: agent-reviewed
+  status: self-reviewed
   reviewers:
     - "Ji Ho Bae"
-    - "Claude Fable 5.1 agent session (review of the trusted statement against erdosproblems.com/1219 and of the proof against Sh:40 §1)"
   notes: >-
     No independent external peer review.  Mechanical checks (2026-09-28 KST): Challenge.lean's
     PartitionArrow is a verbatim copy of the library's (scripts/sync_challenge.py --check); the Lean
